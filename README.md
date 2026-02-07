@@ -25,7 +25,7 @@ I provisioned a dedicated Resource Group (`SOC-Lab-RG`) to house the Honeypot VM
 To attract global botnet traffic, I implemented an aggressive Network Security Group (NSG) rule (`DANGER_ALLOW_ANY_INBOUND`) that opened all inbound ports. Inside the VM, I disabled all local firewall profiles to ensure every connection attempt reached the security logs.
 
 <img src="SOC_Cloud_IMG3.png" width="800">
-<img src="SOC_Cloud_IMG4.jpg" width="800">
+<img src="SOC_Cloud_IMG4.png" width="800">
 
 ---
 
@@ -33,12 +33,9 @@ To attract global botnet traffic, I implemented an aggressive Network Security G
 
 This lab served as a rigorous exercise in infrastructure debugging:
 
-* **Heartbeat Verification**: I used the `Heartbeat` table in Sentinel to confirm the connection between my local VM agent and the cloud workspace was live.
-* **Permission Hardening**: I bypassed `ProgramData` directory restrictions by migrating the log pipeline to the root `C:\` directory to ensure the **Microsoft Monitoring Agent** maintained a 100% upload success rate.
-* **UI Visualization Constraints**: I overcame a SIEM interface bug by utilizing the `render scatterchart` command in KQL to force a geospatial visualization when the standard Map UI was unavailable.
-
-<img src="image_7aa47f.jpg" width="800">
-<img src="image_7aa001.png" width="800">
+* **Heartbeat Verification**: I verified the connection between my local VM agent and the cloud workspace to ensure 100% data ingestion uptime.
+* **Permission Hardening**: I bypassed system directory restrictions by migrating the log pipeline to the root `C:\` drive to ensure the **Microsoft Monitoring Agent** had full write access.
+* **UI Visualization Constraints**: I overcame a SIEM interface bug by utilizing the `render scatterchart` command in KQL to force a geospatial visualization.
 
 ---
 
@@ -58,11 +55,12 @@ FAILED_RDP_WITH_GEO_CL_CL
 | summarize event_count=count() by latitude, longitude
 | render scatterchart with (kind=map)
 ```
+---
+
 Geospatial Mapping
 The final output demonstrates the geographic distribution of attacks, with coordinates successfully plotted on a geospatial grid.
 
-<img src="image_7afe1a.png" width="800"> <img src="image_7b1828.png" width="800">
+<img src="SOC_Cloud_IMG6.png" width="800"> <img src="SOC_Cloud_IMG7.png" width="800">
 
 🏁 Conclusion
 As a 32-year-old student at Chaffey College, this "trial by fire" session solidified my understanding of the Log Pipeline, from raw Windows Events to cloud-based SIEM visualizations. This project proves my ability to not only deploy security tools but to debug the underlying architecture when automated systems fail.
-
